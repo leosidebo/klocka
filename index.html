@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>Canvas tutorial</title>
+    <title>Klocka</title>
     <script type="text/javascript">
       function drawCanvas() {
         var ctx = document.getElementById('canvas').getContext('2d');
@@ -52,16 +52,8 @@
         ctx.beginPath();
         ctx.arc(0, 0, 50, 0, Math.PI * 2, true); 
 
-        // Hour
-        const currentDate = new Date()
-        const secondsRatio = currentDate.getSeconds() / 60;
-        const minutesRatio = (secondsRatio + currentDate.getMinutes()) / 60;
-        const hoursRatio = (minutesRatio + currentDate.getHours()) / 12;
-        console.log(hoursRatio);
-
-
-        // ctx.rotate(((Math.PI / 6) + (Math.PI / 360) + (Math.PI / 21600)) * hrs);
-        ctx.rotate((hoursRatio));
+        ctx.rotate((Math.PI / 6) * (hrs + (min / 60) + (sec / 3600)));
+        console.log((hrs + (min / 60) + (sec / 3600)));
         ctx.moveTo(0,0);
         ctx.lineTo(0, -25); // Hour hand
         ctx.stroke();
@@ -70,7 +62,7 @@
         ctx.save();
         ctx.translate(75, 75);
         
-        ctx.rotate((Math.PI / 30 + Math.PI / 1800) * min);
+        ctx.rotate((Math.PI / 30) * (min + (sec / 60)));
         ctx.moveTo(0,0);
         ctx.lineTo(0, -35); // Minute hand
         ctx.stroke();
@@ -109,7 +101,8 @@
           hrs = hrs - 12;
         }
 
-        hrsHand.style.transform = "rotate(" + ((360 / 12 + 360 / 720 + 360 / 43200) * hrs) + "deg)";
+        // console.log((360 / 12) * (hrs + (min / 60) + (sec / 3600)));
+        hrsHand.style.transform = "rotate(" + ((Math.PI / 6) * (hrs + (min / 60) + (sec / 3600))) + "deg)";
         minHand.style.transform = "rotate(" + ((360 / 60 + 360 / 3600) * min) + "deg)";
         secHand.style.transform = "rotate(" + ((360 / 60) * sec) + "deg)";
 
